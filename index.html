@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LKPD Manajemen Server VPS AWS</title>
+<style>
+:root{--navy:#17243a;--blue:#2563eb;--orange:#f59e0b;--ink:#1f2937;--muted:#64748b;--line:#dbe2ea;--paper:#fff;--bg:#eef2f7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px/1.6 Arial,Helvetica,sans-serif;color:var(--ink)}
+header{background:linear-gradient(120deg,#17243a,#263e62);color:white;padding:28px 18px}
+.header-inner,.container{max-width:1000px;margin:auto}header h1{margin:0 0 5px;font-size:clamp(23px,4vw,34px)}header p{margin:0;color:#dbeafe}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:18px auto;max-width:1000px;padding:0 16px}
+button{border:0;border-radius:8px;padding:11px 16px;font-weight:700;cursor:pointer;background:var(--blue);color:white}
+button.secondary{background:#e2e8f0;color:#1e293b}button:hover{filter:brightness(.96)}
+.container{padding:0 16px 40px}.sheet{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:24px;margin:0 0 18px;box-shadow:0 4px 16px #0f172a0b}
+h2{font-size:21px;color:#d97706;margin:0 0 14px;border-bottom:1px solid var(--line);padding-bottom:8px}
+h3{font-size:16px;margin:18px 0 8px}.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+label{display:block;font-weight:700;font-size:13px;color:#475569;margin-bottom:5px}
+input[type=text],input[type=url],input[type=number],textarea,select{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:7px;font:inherit;color:var(--ink);background:white}
+textarea{min-height:72px;resize:vertical}.answer{background:#f8fafc;border-left:3px solid #93c5fd;padding:12px;border-radius:5px;margin-top:7px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}th,td{border:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}th{background:#eff4fa}
+.checks{display:grid;gap:10px}.checks label{display:flex;align-items:flex-start;gap:9px;font-size:14px;font-weight:400;color:var(--ink)}input[type=checkbox]{margin-top:4px;transform:scale(1.15)}
+.note{background:#fff7e6;border-left:4px solid var(--orange);padding:12px;border-radius:6px}.success{background:#effaf3;border-left:4px solid #22c55e;padding:12px;border-radius:6px}
+.code{font-family:Consolas,monospace;background:#17243a;color:#e2e8f0;padding:12px;border-radius:7px;overflow-wrap:anywhere}
+.small{font-size:12px;color:var(--muted)}.footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
+@media(max-width:650px){.meta,.grid2,.grid3{grid-template-columns:1fr}.sheet{padding:17px}table{font-size:12px}th,td{padding:6px}}
+@media print{body{background:white}.toolbar{display:none}.sheet{box-shadow:none;break-inside:avoid;margin-bottom:10px}.container{max-width:none}.sheet{border:1px solid #bbb}input,textarea{border:0;border-bottom:1px solid #bbb;border-radius:0}header{background:#17243a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><h1>LKPD: Manajemen Server VPS AWS</h1><p>Modul Praktik AWS Cloud · Fase 1 sampai 6</p></div></header>
+<div class="toolbar">
+<button onclick="saveData()">Simpan Isian</button>
+<button class="secondary" onclick="window.print()">Cetak / Simpan PDF</button>
+<button class="secondary" onclick="resetData()">Reset Isian</button>
+</div>
+<main class="container">
+<section class="sheet">
+<h2>Identitas Peserta</h2>
+<div class="meta">
+<div><label>Nama</label><input data-save id="nama" value="Rifki" type="text"></div>
+<div><label>Kelas</label><input data-save id="kelas" value="XI RPL I" type="text"></div>
+<div><label>Tanggal</label><input data-save id="tanggal" type="text" placeholder="Isi tanggal praktik"></div>
+</div>
+<div style="margin-top:12px;max-width:420px"><label>Instruktur</label><input data-save id="instruktur" type="text" placeholder="Nama instruktur"></div>
+</section>
+
+<section class="sheet">
+<h2>Fase 1: Pengenalan Konsep VPS &amp; Cloud</h2>
+<p>Jelaskan secara singkat pemahaman mengenai perbedaan layanan berikut.</p>
+<div class="grid2">
+<div><h3>Shared Hosting</h3><div class="answer">Satu server digunakan bersama oleh banyak pengguna. Sumber daya seperti CPU, RAM, dan penyimpanan dibagi, sehingga biaya lebih murah tetapi kontrol server terbatas.</div></div>
+<div><h3>Dedicated Server</h3><div class="answer">Satu server fisik disediakan khusus untuk satu pengguna. Kinerja dan kontrol lebih besar, tetapi biaya serta tanggung jawab pengelolaannya juga lebih tinggi.</div></div>
+<div><h3>Amazon Lightsail</h3><div class="answer">Layanan VPS sederhana dari AWS dengan paket harga dan sumber daya yang mudah dipilih. Cocok untuk website atau aplikasi skala kecil hingga menengah.</div></div>
+<div><h3>Amazon EC2</h3><div class="answer">Layanan komputasi cloud AWS yang menyediakan server virtual dengan pilihan konfigurasi luas. Pengguna dapat mengatur tipe instance, jaringan, penyimpanan, dan skalanya.</div></div>
+</div>
+</section>
+
+<section class="sheet">
+<h2>Fase 2: Persiapan dan Provisioning Server</h2>
+<p>Beri tanda centang setelah tahapan benar-benar berhasil dilakukan di konsol AWS.</p>
+<div class="checks">
+<label><input data-save type="checkbox"> Mengaktifkan akun AWS dan login ke Management Console.</label>
+<label><input data-save type="checkbox"> Memilih Region AWS terdekat (misalnya ap-southeast-1 / Singapore).</label>
+<label><input data-save type="checkbox"> Memilih Amazon Machine Image (AMI), misalnya Ubuntu 22.04 LTS.</label>
+<label><input data-save type="checkbox"> Memilih Instance Type dalam batas Free Tier (misalnya t2.micro / t3.micro, sesuai kelayakan akun).</label>
+</div>
+<div class="note" style="margin-top:15px"><b>Penting: Manajemen Key Pair</b><br>File berakhiran .pem atau .ppk merupakan kunci untuk mengakses server. Simpan secara aman dan jangan membagikannya. Jika hilang, akses SSH dapat terganggu.</div>
+<div style="margin-top:14px"><label>Nama Key Pair yang saya buat</label><input data-save type="text" placeholder="Isi sesuai nama Key Pair AWS milikmu"></div>
+<p class="small">Catatan: nama Key Pair dan checklist praktik harus diisi berdasarkan tindakan yang benar-benar dilakukan.</p>
+</section>
+
+<section class="sheet">
+<h2>Fase 3: Jaringan, Keamanan, dan Akses Server</h2>
+<p>Port yang benar untuk aturan Security Group:</p>
+<table><thead><tr><th>Tipe Akses</th><th>Protokol</th><th>Port Range</th><th>Source</th><th>Deskripsi / Kegunaan</th></tr></thead>
+<tbody>
+<tr><td>SSH</td><td>TCP</td><td>22</td><td>My IP (disarankan)</td><td>Akses remote terminal ke server.</td></tr>
+<tr><td>HTTP</td><td>TCP</td><td>80</td><td>0.0.0.0/0</td><td>Akses website tanpa enkripsi.</td></tr>
+<tr><td>HTTPS</td><td>TCP</td><td>443</td><td>0.0.0.0/0</td><td>Akses website dengan enkripsi TLS/SSL.</td></tr>
+<tr><td>Custom TCP</td><td>TCP</td><td>8080</td><td>My IP</td><td>Akses panel admin khusus bila memang diperlukan.</td></tr>
+</tbody></table>
+<div class="note"><b>Keamanan:</b> Hindari membuka SSH ke Anywhere (0.0.0.0/0) jika tidak diperlukan. Batasi ke alamat IP milik sendiri dan buka hanya port yang dibutuhkan.</div>
+<h3>Perintah SSH dari terminal lokal</h3>
+<p>Ganti nama file key dan alamat IP dengan data server AWS milikmu.</p>
+<div class="code">ssh -i "nama-key.pem" ubuntu@IP-PUBLIK-EC2</div>
+<div class="grid2" style="margin-top:12px">
+<div><label>Nama file key (.pem)</label><input data-save type="text" placeholder="contoh: aws-key.pem"></div>
+<div><label>IP Publik Server</label><input data-save type="text" placeholder="Isi IP publik EC2"></div>
+</div>
+</section>
+
+<section class="sheet">
+<h2>Fase 4: Konfigurasi Sistem Operasi &amp; Web Server</h2>
+<p>Pasangkan perintah Linux dengan fungsi yang tepat.</p>
+<table><thead><tr><th>No.</th><th>Perintah</th><th>Jawaban</th><th>Fungsi</th></tr></thead><tbody>
+<tr><td>1</td><td><code>sudo apt update</code></td><td><b>C</b></td><td>Memperbarui daftar paket repositori OS.</td></tr>
+<tr><td>2</td><td><code>sudo systemctl restart apache2</code></td><td><b>D</b></td><td>Memuat ulang layanan web server.</td></tr>
+<tr><td>3</td><td><code>ls -la</code></td><td><b>A</b></td><td>Menampilkan seluruh file termasuk yang tersembunyi.</td></tr>
+<tr><td>4</td><td><code>chmod 400 key.pem</code></td><td><b>B</b></td><td>Mengatur izin file agar hanya pemilik yang dapat membacanya (read-only untuk pemilik).</td></tr>
+</tbody></table>
+<h3>Tugas Praktik Web Server</h3>
+<div class="answer">
+1. Instal Apache atau Nginx pada server.<br>
+2. Buat file <code>index.html</code> kustom di direktori <code>/var/www/html/</code>.<br>
+3. Buka IP Publik server melalui browser.
+</div>
+<div style="margin-top:12px"><label>Alamat IP Publik Server saya</label><input data-save type="url" placeholder="http://IP-PUBLIK-SERVER"></div>
+<p class="small">Alamat di atas diisi setelah web server berhasil diakses. Jangan menggunakan alamat contoh sebagai hasil praktik.</p>
+</section>
+
+<section class="sheet">
+<h2>Fase 5: Deployment Aplikasi dan Domain</h2>
+<p>Untuk mengarahkan nama domain ke IP Publik AWS, atur DNS Record berikut.</p>
+<table><thead><tr><th>Tipe Record</th><th>Name / Host</th><th>Value / Target</th><th>TTL</th></tr></thead><tbody>
+<tr><td>A</td><td>@</td><td>IP Publik AWS (IPv4)</td><td>Auto / 3600</td></tr>
+<tr><td>A</td><td>www</td><td>IP Publik AWS (IPv4)</td><td>Auto / 3600</td></tr>
+</tbody></table>
+<p class="small">Alternatif: record www dapat menggunakan CNAME yang diarahkan ke domain utama, sesuai dukungan penyedia DNS.</p>
+<h3>Checklist Deployment Akhir</h3>
+<div class="checks">
+<label><input data-save type="checkbox"> Mengunggah file website menggunakan SFTP (FileZilla/Cyberduck) ke direktori web.</label>
+<label><input data-save type="checkbox"> Memastikan propagasi DNS selesai (domain dapat diakses di browser).</label>
+<label><input data-save type="checkbox"> Menginstal Let's Encrypt (Certbot) dan mengaktifkan HTTPS.</label>
+</div>
+<div class="grid2" style="margin-top:14px">
+<div><label>Domain utama</label><input data-save type="text" placeholder="contoh: namadomain.com"></div>
+<div><label>IP Target AWS</label><input data-save type="text" placeholder="Isi IP publik AWS"></div>
+</div>
+</section>
+
+<section class="sheet">
+<h2>Fase 6: Manajemen, Monitoring &amp; Backup</h2>
+<p>Pemeliharaan server penting untuk menjaga ketersediaan layanan. Gunakan AWS CloudWatch untuk melihat status server dan catat hasil aktual.</p>
+<div class="grid2">
+<div>
+<h3>Catat Metrik Server Saat Ini (CloudWatch)</h3>
+<label>Rata-rata CPU Utilization (%)</label><input data-save type="number" min="0" max="100" placeholder="Isi hasil CloudWatch">
+<label style="margin-top:10px">Status Check Failed</label><input data-save type="text" placeholder="Isi status aktual, misalnya 0">
+</div>
+<div>
+<h3>Langkah Backup (Snapshot)</h3>
+<ol><li>Buka menu <b>Volumes</b> di konsol EC2.</li><li>Pilih Volume server.</li><li>Klik <b>Actions &gt; Create Snapshot</b>.</li><li>Beri deskripsi dan simpan.</li></ol>
+</div>
+</div>
+<p class="small">Nilai CPU dan Status Check berbeda-beda sesuai kondisi instance. Ambil dari CloudWatch, jangan mengarang angka.</p>
+<h3>Catatan &amp; Evaluasi Instruktur</h3>
+<textarea data-save placeholder="Diisi oleh instruktur"></textarea>
+<div style="margin-top:14px;max-width:360px"><label>Tanda Tangan Instruktur</label><input data-save type="text" placeholder="Nama / tanda tangan instruktur"></div>
+</section>
+<div class="footer">LKPD Praktik AWS Cloud · Dokumen HTML interaktif · Simpan isian sebelum menutup halaman</div>
+</main>
+<script>
+const KEY='lkpd-vps-aws-v1';
+function fields(){return [...document.querySelectorAll('[data-save]')]}
+function saveData(){const data=fields().map((el)=>el.type==='checkbox'?el.checked:el.value);localStorage.setItem(KEY,JSON.stringify(data));alert('Isian berhasil disimpan di browser perangkat ini.');}
+function loadData(){try{const data=JSON.parse(localStorage.getItem(KEY)||'null');if(data)fields().forEach((el,i)=>{if(i<data.length){if(el.type==='checkbox')el.checked=!!data[i];else if(data[i]!==undefined)el.value=data[i];}})}catch(e){}}
+function resetData(){if(confirm('Hapus semua isian yang tersimpan dan kembalikan ke kondisi awal?')){localStorage.removeItem(KEY);location.reload();}}
+loadData();
+</script>
+</body></html>
